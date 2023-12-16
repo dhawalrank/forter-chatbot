@@ -27,7 +27,9 @@ async function processMessage(socket, payload) {
                 message = await bot.sendMessageToBot(payload.message);
             } else if (messageIntent === intent.INTENTS.question) {
                 message = await elasticsearch.performElasticSearch(
-                    payload.message.toLowerCase().replace("question: ", "")
+                    payload.message
+                        .toLowerCase()
+                        .replace(intent.INTENT_RECOGNIZER.question, "")
                 );
             }
             payload.message = message;

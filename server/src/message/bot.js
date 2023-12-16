@@ -1,7 +1,6 @@
 import SendBird from "sendbird";
-import utils from "../utils.js";
-import config from "../../config.js";
-
+import utils from "../shared/utils.js";
+import config from "../../config.json" assert { type: "json" };
 const APP_ID = config.sendbird.app_id;
 const API_TOKEN = config.sendbird.api_token;
 const BOT_ID = config.sendbird.bot_id;

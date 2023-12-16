@@ -3,6 +3,8 @@ import { Socket } from "socket.io";
 import MESSAGE_CONSTANTS from "../shared/constants/message.js";
 import BOT_CONSTANTS from "../shared/constants/bot.js";
 import bot from "../message/bot.js";
+import utils from "../shared/utils.js";
+
 /**
  * Controller for fetching all the unanswered questions
  * @param {{}} req
@@ -56,7 +58,7 @@ async function getUnansweredQuestions(req, res, socket) {
 }
 /**
  * Controller for adding answer to a question
- * @param {{params: String, body: {answer: string}}} req
+ * @param {{params: {id: String}, body: {answer: String, sender_name: String, question: String}}} req
  * @param {{json: Function, status: () => {json: Function, send: Function}}} res
  * @param {Socket} socket
  */
@@ -64,7 +66,11 @@ async function updateUnansweredQuestion(req, res, socket) {
     try {
         await elasticsearch.updateDocumentById(req.params.id, req.body.answer);
         const message = {
-            message: `User ${req.body.sender_name} submitted an answer:\nQuestion: ${req.body.question}\nAnswer: ${req.body.answer}`,
+            message: utils.generateAnswerSubmissionResponse(
+                req.body.sender_name,
+                req.body.question,
+                req.body.answer
+            ),
             sender_name: BOT_CONSTANTS.BOT_USER.name,
             sender_id: BOT_CONSTANTS.BOT_USER.id,
             created_at: new Date().toString(),

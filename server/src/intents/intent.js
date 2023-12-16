@@ -8,17 +8,16 @@ import INTENT_CONSTANTS from "../shared/constants/intents.js";
  */
 function getIntent(inputString) {
     inputString = inputString.toLowerCase();
-    const isIntentFun = inputString.includes("forterchatbot: ");
-    if (isIntentFun) {
+    if (inputString.includes(INTENT_CONSTANTS.INTENT_RECOGNIZER.chatbot)) {
         return INTENT_CONSTANTS.INTENTS.chatbot;
     }
-    const isIntentQuestion = inputString.includes("question: ");
-    if (isIntentQuestion) {
+    if (inputString.includes(INTENT_CONSTANTS.INTENT_RECOGNIZER.question)) {
         return INTENT_CONSTANTS.INTENTS.question;
     }
 }
 
 export default {
     INTENTS: INTENT_CONSTANTS.INTENTS,
+    INTENT_RECOGNIZER: INTENT_CONSTANTS.INTENT_RECOGNIZER,
     getIntent,
 };

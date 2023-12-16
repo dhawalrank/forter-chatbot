@@ -1,6 +1,6 @@
 import { Client } from "@elastic/elasticsearch";
 import bot from "../message/bot.js";
-import config from "../../config.js";
+import config from "../../config.json" assert { type: "json" };
 import BOT_CONSTANTS from "../shared/constants/bot.js";
 
 /**
@@ -16,7 +16,7 @@ const client = new Client({
 /**
  * Perform elastic search for a message
  * @param {String} message
- * @returns {String}
+ * @returns {Promise<String>}
  */
 async function performElasticSearch(message) {
     const body = await client.search({
@@ -95,7 +95,7 @@ async function createQuestionInElastic(question) {
 }
 /**
  * Get all unanswered questions from elastic
- * @returns {[]}
+ * @returns {Promise<[]>}
  */
 async function getUnAnsweredQuestions() {
     const body = await client.search({
